@@ -1,5 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Hello, World!</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2018-07-18T14:58:27+08:00</updated><entry><title>在 OSX 中使用 locate 命令</title><link href="/zai-osx-zhong-shi-yong-locate-ming-ling.html" rel="alternate"></link><published>2018-07-18T14:58:27+08:00</published><updated>2018-07-18T14:58:27+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2018-07-18:/zai-osx-zhong-shi-yong-locate-ming-ling.html</id><summary type="html">&lt;p&gt;从 OS X Lion 开始 OS X 系统内置了 &lt;code&gt;locate&lt;/code&gt; 命令，如果没有启用的话在第一次执行 &lt;code&gt;locate&lt;/code&gt; 时系统会提示如何启用：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Hello, World!</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2020-07-13T11:14:00+08:00</updated><entry><title>树莓派自动重连WiFi</title><link href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html" rel="alternate"></link><published>2020-07-13T11:14:00+08:00</published><updated>2020-07-13T11:14:00+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2020-07-13:/shu-mei-pai-zi-dong-zhong-lian-wifi.html</id><summary type="html">&lt;p&gt;树莓派断网后不会自动重连Wifi，网上找到了解决方案&lt;/p&gt;
+&lt;p&gt;repo在这里：&lt;a href="https://github.com/dweeber/WiFi_Check"&gt;https://github.com/dweeber/WiFi_Check&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;把脚本放到&lt;code&gt;/usr/local/bin/wifi_check&lt;/code&gt;，然后编辑&lt;code&gt;/etc/crontab&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;*/5 * * * * root /usr/local/bin/wifi_check&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;脚本内容:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;span class="c1"&gt;# A Project of TNET Services, Inc&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Title:     WiFi_Check&lt;/span&gt;
+&lt;span class="c1"&gt;# Author:    Kevin Reed (Dweeber)&lt;/span&gt;
+&lt;span class="c1"&gt;#            dweeber.dweebs@gmail.com&lt;/span&gt;
+&lt;span class="c1"&gt;# Project:   Raspberry Pi Stuff&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Copyright: Copyright (c) 2012 Kevin …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;树莓派断网后不会自动重连Wifi，网上找到了解决方案&lt;/p&gt;
+&lt;p&gt;repo在这里：&lt;a href="https://github.com/dweeber/WiFi_Check"&gt;https://github.com/dweeber/WiFi_Check&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;把脚本放到&lt;code&gt;/usr/local/bin/wifi_check&lt;/code&gt;，然后编辑&lt;code&gt;/etc/crontab&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;*/5 * * * * root /usr/local/bin/wifi_check&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;脚本内容:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;span class="c1"&gt;# A Project of TNET Services, Inc&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Title:     WiFi_Check&lt;/span&gt;
+&lt;span class="c1"&gt;# Author:    Kevin Reed (Dweeber)&lt;/span&gt;
+&lt;span class="c1"&gt;#            dweeber.dweebs@gmail.com&lt;/span&gt;
+&lt;span class="c1"&gt;# Project:   Raspberry Pi Stuff&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Copyright: Copyright (c) 2012 Kevin Reed &amp;lt;kreed@tnet.com&amp;gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#            https://github.com/dweeber/WiFi_Check&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Purpose:&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Script checks to see if WiFi has a network IP and if not&lt;/span&gt;
+&lt;span class="c1"&gt;# restart WiFi&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Uses a lock file which prevents the script from running more&lt;/span&gt;
+&lt;span class="c1"&gt;# than one at a time.  If lockfile is old, it removes it&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Instructions:&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# o Install where you want to run it from like /usr/local/bin&lt;/span&gt;
+&lt;span class="c1"&gt;# o chmod 0755 /usr/local/bin/WiFi_Check&lt;/span&gt;
+&lt;span class="c1"&gt;# o Add to crontab&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Run Every 5 mins - Seems like ever min is over kill unless&lt;/span&gt;
+&lt;span class="c1"&gt;# this is a very common problem.  If once a min change */5 to *&lt;/span&gt;
+&lt;span class="c1"&gt;# once every 2 mins */5 to */2 ... &lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# */5 * * * * /usr/local/bin/WiFi_Check &lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;span class="c1"&gt;# Settings&lt;/span&gt;
+&lt;span class="c1"&gt;# Where and what you want to call the Lockfile&lt;/span&gt;
+&lt;span class="nv"&gt;lockfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/var/run/WiFi_Check.pid&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;# Which Interface do you want to check/fix&lt;/span&gt;
+&lt;span class="nv"&gt;wlan&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;wlan0&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Starting WiFi check for &lt;/span&gt;&lt;span class="nv"&gt;$wlan&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+date
+&lt;span class="nb"&gt;echo&lt;/span&gt; 
+
+&lt;span class="c1"&gt;# Check to see if there is a lock file&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e &lt;span class="nv"&gt;$lockfile&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="c1"&gt;# A lockfile exists... Lets check to see if it is still valid&lt;/span&gt;
+    &lt;span class="nv"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;cat &lt;span class="nv"&gt;$lockfile&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;kill&lt;/span&gt; -0 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt;1 &amp;gt; /dev/null &lt;span class="nv"&gt;$pid&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="c1"&gt;# Still Valid... lets let it be...&lt;/span&gt;
+        &lt;span class="c1"&gt;#echo &amp;quot;Process still running, Lockfile valid&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+        &lt;span class="c1"&gt;# Old Lockfile, Remove it&lt;/span&gt;
+        &lt;span class="c1"&gt;#echo &amp;quot;Old lockfile, Removing Lockfile&amp;quot;&lt;/span&gt;
+        rm &lt;span class="nv"&gt;$lockfile&lt;/span&gt;
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="c1"&gt;# If we get here, set a lock file using our current PID#&lt;/span&gt;
+&lt;span class="c1"&gt;#echo &amp;quot;Setting Lockfile&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$$&lt;/span&gt; &amp;gt; &lt;span class="nv"&gt;$lockfile&lt;/span&gt;
+
+&lt;span class="c1"&gt;# We can perform check&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Performing Network check for &lt;/span&gt;&lt;span class="nv"&gt;$wlan&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; ip a show &lt;span class="nv"&gt;$wlan&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -q &lt;span class="s2"&gt;&amp;quot;inet ((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Network is Okay&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Network connection down! Attempting reconnection.&amp;quot;&lt;/span&gt;
+    ip link &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$wlan&lt;/span&gt; down
+    sleep &lt;span class="m"&gt;5&lt;/span&gt;
+    ip link &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$wlan&lt;/span&gt; up
+    ip a show &lt;span class="nv"&gt;$wlan&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s2"&gt;&amp;quot;inet ((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt; 
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Current Setting:&amp;quot;&lt;/span&gt;
+ip a show &lt;span class="nv"&gt;$wlan&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s2"&gt;&amp;quot;inet ((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Check is complete, Remove Lock file and exit&lt;/span&gt;
+&lt;span class="c1"&gt;#echo &amp;quot;process is complete, removing lockfile&amp;quot;&lt;/span&gt;
+rm &lt;span class="nv"&gt;$lockfile&lt;/span&gt;
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;span class="c1"&gt;# End of Script&lt;/span&gt;
+&lt;span class="c1"&gt;##################################################################&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="misc"></category></entry><entry><title>在 OSX 中使用 locate 命令</title><link href="/zai-osx-zhong-shi-yong-locate-ming-ling.html" rel="alternate"></link><published>2018-07-18T14:58:27+08:00</published><updated>2018-07-18T14:58:27+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2018-07-18:/zai-osx-zhong-shi-yong-locate-ming-ling.html</id><summary type="html">&lt;p&gt;从 OS X Lion 开始 OS X 系统内置了 &lt;code&gt;locate&lt;/code&gt; 命令，如果没有启用的话在第一次执行 &lt;code&gt;locate&lt;/code&gt; 时系统会提示如何启用：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  $ locate python
 
   WARNING: The locate database &lt;span class="o"&gt;(&lt;/span&gt;/var/db/locate.database&lt;span class="o"&gt;)&lt;/span&gt; does not exist.

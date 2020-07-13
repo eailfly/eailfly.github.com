@@ -95,6 +95,42 @@
 
 <article>
   <header>
+    <h2><a href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html#shu-mei-pai-zi-dong-zhong-lian-wifi">树莓派自动重连WiFi</a></h2>
+    <p>
+      Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>树莓派断网后不会自动重连Wifi，网上找到了解决方案</p>
+<p>repo在这里：<a href="https://github.com/dweeber/WiFi_Check">https://github.com/dweeber/WiFi_Check</a></p>
+<p>把脚本放到<code>/usr/local/bin/wifi_check</code>，然后编辑<code>/etc/crontab</code>：</p>
+<div class="highlight"><pre><span></span><span class="err">*/5 * * * * root /usr/local/bin/wifi_check</span>
+</pre></div>
+
+
+<p>脚本内容:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">##################################################################</span>
+<span class="c1"># A Project of TNET Services, Inc</span>
+<span class="c1">#</span>
+<span class="c1"># Title:     WiFi_Check</span>
+<span class="c1"># Author:    Kevin Reed (Dweeber)</span>
+<span class="c1">#            dweeber.dweebs@gmail.com</span>
+<span class="c1"># Project:   Raspberry Pi Stuff</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright: Copyright (c) 2012 Kevin …</span></pre></div>
+        <br>
+        <a class="btn"
+           href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html#shu-mei-pai-zi-dong-zhong-lian-wifi">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/zai-osx-zhong-shi-yong-locate-ming-ling.html#zai-osx-zhong-shi-yong-locate-ming-ling">在 OSX 中使用 locate 命令</a></h2>
     <p>
       Posted on Wed 18 July 2018 in <a href="/category/misc.html">misc</a>
@@ -356,29 +392,6 @@ yaourt -U apricity-icons-1.0.0-1-any.pkg.tar.xz
 <h2>安装主题</h2>
 <div class="highlight"><pre><span></span>yaourt -S apricity-themes-gnome apricity-icons apricity-keyring apricity-wallpapers
 </pre></div>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/yong-sphinx-zhi-zuo-zhong-wen-pdf.html#yong-sphinx-zhi-zuo-zhong-wen-pdf">用 Sphinx 制作中文 pdf</a></h2>
-    <p>
-      Posted on Mon 30 May 2016 in <a href="/category/misc.html">misc</a>
-
-
-    </p>
-  </header>
-  <div>
-      <p>[转自] <a href="https://guts.me/2013/06/21/generate-pdf-containing-chinese-with-sphinx/">用 Sphinx 制作中文 pdf</a></p>
-<p>最近一直在玩些少众的东西，感觉都是很棒的东西，可惜关于它们的资源比较少，中文的就更少，所以打算翻译其中一些觉得比较好的文档。</p>
-<p>其中有些文档是用 Sphinx 制作的，有了文档的源码，翻译好再用 Sphinx 再次生成中文版的就可以。然而在生成 pdf 文档的过程却遇到很多问题。虽然 Sphinx 是用 Python 写的，Python 对 UTF8 编码的支持毋庸置疑，但生成 pdf 的过程是由 LaTeX 套件完成。问题在于 LaTeX 套件从开发之日起就没有考虑过支持如中文这样使用 Unicode 字符的语言。</p>
-<p>google 了很久，经过了很多尝试，也在 stackoverflow.com 上问了一些高手，最终得到两个能够要达到这个目的方案。两个方案的效果都不太完美，不过还算差强人意了。</p>
-<p>在 …</p>
-        <br>
-        <a class="btn"
-           href="/yong-sphinx-zhi-zuo-zhong-wen-pdf.html#yong-sphinx-zhi-zuo-zhong-wen-pdf">
-          Continue reading
-        </a>
   </div>
 </article>
 
