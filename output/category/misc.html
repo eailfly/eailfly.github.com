@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hello, World! Atom">
+
+
+
+
+
+    <meta name="author" content="EaiLFly" />
+    <meta name="description" content="" />
+<meta property="og:site_name" content="Hello, World!"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:title" content="Hello, World!"/>
+<meta property="og:description" content=""/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content=""/>
+
+  <title>Hello, World! &ndash; Category misc</title>
+
+</head>
+<body class="light-theme">
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+
+      <h1>
+        <a href=""></a>
+      </h1>
+
+
+
+      <nav>
+        <ul class="list">
+
+
+
+            <li>
+              <a target="_self" href="http://getpelican.com/" >Pelican</a>
+            </li>
+            <li>
+              <a target="_self" href="http://python.org/" >Python.org</a>
+            </li>
+            <li>
+              <a target="_self" href="http://jinja.pocoo.org/" >Jinja2</a>
+            </li>
+            <li>
+              <a target="_self" href="#" >You can modify those links in your config file</a>
+            </li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-You can add links in your config file" href="#" target="_blank">
+              <i class="fab fa-You can add links in your config file"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-Another social link" href="#" target="_blank">
+              <i class="fab fa-Another social link"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+
+
+
+<article>
+  <header>
+    <h2><a href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html#shu-mei-pai-zi-dong-zhong-lian-wifi">树莓派自动重连WiFi</a></h2>
+    <p>
+      Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>树莓派断网后不会自动重连Wifi，网上找到了解决方案</p>
+<p>repo在这里：<a href="https://github.com/dweeber/WiFi_Check">https://github.com/dweeber/WiFi_Check</a></p>
+<p>把脚本放到<code>/usr/local/bin/wifi_check</code>，然后编辑<code>/etc/crontab</code>：</p>
+<div class="highlight"><pre><span></span><span class="err">*/5 * * * * root /usr/local/bin/wifi_check</span>
+</pre></div>
+
+
+<p>脚本内容:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">##################################################################</span>
+<span class="c1"># A Project of TNET Services, Inc</span>
+<span class="c1">#</span>
+<span class="c1"># Title:     WiFi_Check</span>
+<span class="c1"># Author:    Kevin Reed (Dweeber)</span>
+<span class="c1">#            dweeber.dweebs@gmail.com</span>
+<span class="c1"># Project:   Raspberry Pi Stuff</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright: Copyright (c) 2012 Kevin …</span></pre></div>
+        <br>
+        <a class="btn"
+           href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html#shu-mei-pai-zi-dong-zhong-lian-wifi">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/zai-osx-zhong-shi-yong-locate-ming-ling.html#zai-osx-zhong-shi-yong-locate-ming-ling">在 OSX 中使用 locate 命令</a></h2>
+    <p>
+      Posted on Wed 18 July 2018 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>从 OS X Lion 开始 OS X 系统内置了 <code>locate</code> 命令，如果没有启用的话在第一次执行 <code>locate</code> 时系统会提示如何启用：</p>
+<div class="highlight"><pre><span></span>  $ locate python
+
+  WARNING: The locate database <span class="o">(</span>/var/db/locate.database<span class="o">)</span> does not exist.
+  To create the database, run the following command:
+
+  sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+
+  Please be aware that the …</pre></div>
+        <br>
+        <a class="btn"
+           href="/zai-osx-zhong-shi-yong-locate-ming-ling.html#zai-osx-zhong-shi-yong-locate-ming-ling">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/kubeadm-bu-shu-kubernetes-ji-qun.html#kubeadm-bu-shu-kubernetes-ji-qun">kubeadm 部署 kubernetes 集群</a></h2>
+    <p>
+      Posted on Fri 20 October 2017 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>本文使用代理的方式来部署集群。</p>
+<h1>服务器信息</h1>
+<ul>
+<li>master: 192.168.25.148</li>
+<li>node: 192.168.25.149</li>
+</ul>
+<h1>master + node</h1>
+<p>前期准备</p>
+<h3>配置 hostname</h3>
+<div class="highlight"><pre><span></span>hostnamectl --static set-hostname master
+hostname master
+</pre></div>
+
+
+<p>编辑 <code>/etc/hosts</code>, 添加一下内容</p>
+<div class="highlight"><pre><span></span><span class="m">192</span>.168.25.148 master
+<span class="m">192</span>.168.25.149 node
+</pre></div>
+
+
+<h3>配置防火墙</h3>
+<p>关闭防火墙。</p>
+<div class="highlight"><pre><span></span>systemctl disable firewalld
+systemctl stop firewalld
+iptables -F
+</pre></div>
+
+
+<h3>配置 selinux</h3>
+<p>关闭 …</p>
+        <br>
+        <a class="btn"
+           href="/kubeadm-bu-shu-kubernetes-ji-qun.html#kubeadm-bu-shu-kubernetes-ji-qun">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/gei-spacemacstian-jia-zhong-wen-zi-ti.html#gei-spacemacstian-jia-zhong-wen-zi-ti">给Spacemacs添加中文字体</a></h2>
+    <p>
+      Posted on Wed 01 March 2017 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>不知道为什么Spacemacs突然不显示中文了，必须得设置一个中文字体才可以，但是中文字体的西文都烂的可以，所以想能不能给中文单独设置一个字体，结果找到了以下方法。
+将以下代码添加到 <code>dotspacemacs/user-config</code>：</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">dolist</span> <span class="p">(</span><span class="nv">charset</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">kana</span> <span class="nv">han</span> <span class="nv">cjk-misc</span> <span class="nv">bopomofo</span><span class="p">))</span>
+  <span class="p">(</span><span class="nv">set-fontset-font</span> <span class="p">(</span><span class="nv">frame-parameter</span> <span class="no">nil</span> <span class="ss">&#39;font</span><span class="p">)</span> <span class="nv">charset</span>
+                    <span class="p">(</span><span class="nv">font-spec</span> <span class="ss">:family</span> <span class="s">&quot;Sans Mono CJK SC&quot;</span> <span class="ss">:size</span> <span class="mi">20</span><span class="p">)))</span>
+</pre></div>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/shi-yong-spacemacsguan-li-hexo.html#shi-yong-spacemacsguan-li-hexo">"使用Spacemacs管理hexo"</a></h2>
+    <p>
+      Posted on Tue 27 December 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <h1>安装</h1>
+<p>在private layer － package.el 中添加</p>
+<div class="highlight"><pre><span></span>    <span class="p">(</span><span class="nv">hexo</span> <span class="ss">:location</span><span class="p">(</span><span class="nv">recipe</span>
+                    <span class="ss">:fetcher</span> <span class="nv">github</span>
+                    <span class="ss">:repo</span> <span class="s">&quot;kuanyui/hexo.el&quot;</span>
+                    <span class="p">))</span>
+</pre></div>
+
+
+<p>melpa 中的版本好像有问题，需要使用github中的版本</p>
+<p>在private layer - func.el 中添加</p>
+<div class="highlight"><pre><span></span>    <span class="p">(</span><span class="nb">defun</span> <span class="nv">hexo-my-blog</span> <span class="p">()</span>
+        <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">hexo</span> <span class="s">&quot;~/my-blog/&quot;</span><span class="p">))</span>
+</pre></div>
+
+
+<h1>Usage</h1>
+<p><code>M-x hexo</code> 可以进入 <code>hexo—mode</code></p>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/wang-ji-rhel7-rootmi-ma-de-zhao-hui-ban-fa.html#wang-ji-rhel7-rootmi-ma-de-zhao-hui-ban-fa">忘记RHEL7 root密码的找回办法</a></h2>
+    <p>
+      Posted on Fri 16 December 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>RHEL7引导时采用grub2，与以前的RHEL版本采用grub1，在引导时差别较大。
+进行单用户模式的方式也有一定差异。</p>
+<p>在RHEL7中，进入单用户模式的方法如下：</p>
+<div class="highlight"><pre><span></span><span class="err">1. 开机到grub2时，用上下键移到用上下键移到菜单中所要使用的启动项，按e（注意不是回车）</span>
+<span class="err">2. 在&quot;linux16 /vmlinuz-3.10.0 ...&quot;这一行的最后面加入&quot;rw single init=/bin/bash&quot;,然后按Ctl+X或F10, 就可以进入 单用户模式，进去干什么都行了。可以改普通用户密码，也可以改root密码。</span>
+<span class="err">3. 输入Ctl+Alt+Del重启。</span>
+</pre></div>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/windowscha-kan-duan-kou-zhan-yong.html#windowscha-kan-duan-kou-zhan-yong">Windows查看端口占用</a></h2>
+    <p>
+      Posted on Fri 16 December 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>假如我们需要确定谁占用了我们的9050端口</p>
+<h1>查看所有的端口占用情况</h1>
+<div class="highlight"><pre><span></span><span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="o">&gt;</span><span class="n">netstat</span> <span class="o">-</span><span class="n">ano</span>
+
+  <span class="err">协议</span>    <span class="err">本地地址</span>                     <span class="err">外部地址</span>               <span class="err">状态</span>                   <span class="n">PID</span>
+
+  <span class="n">TCP</span>    <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">1434</span>         <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span>              <span class="n">LISTENING</span>       <span class="mi">3236</span>
+  <span class="n">TCP</span>    <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">5679</span>         <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span>              <span class="n">LISTENING</span>       <span class="mi">4168</span>
+  <span class="n">TCP</span>    <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">7438</span>         <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span>              <span class="n">LISTENING</span>       <span class="mi">4168</span>
+  <span class="n">TCP …</span></pre></div>
+        <br>
+        <a class="btn"
+           href="/windowscha-kan-duan-kou-zhan-yong.html#windowscha-kan-duan-kou-zhan-yong">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia.html#jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia">将hexo项目置与版本控制下</a></h2>
+    <p>
+      Posted on Sun 16 October 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>[转自]<a href="http://www.iamsuperman.cn/2016/02/22/hexo/hexo-guide-3/">Hexo 博客搭建教程（三）：Hexo 博客代码版本控制</a>
+由于 Hexo 只会将生成后的 public 文件夹部署到 github 上，导致无法对博客进行代码版本控制。同时如果需要备份代码的话，只能通过其他手段来实现。
+本文介绍了如何利用 github 分支对代码进行版本控制，同时起到备份代码的作用。</p>
+<p>解决思路
+实现 Hexo 博客代码版本控制以及备份的思路如下：
+通过新建一个source分支用于专门存放 hexo 代码。原先的master分支依然不变，作为 hexo 部署的分支。
+每次在部署后，再把代码提交到source分支。</p>
+<p>1、本地创建 git 仓库</p>
+<div class="highlight"><pre><span></span>git init
+</pre></div>
+
+
+<p>2、添加远程库</p>
+<div class="highlight"><pre><span></span>git remote add origin &lt;git repository url&gt;
+</pre></div>
+
+
+<p>3、创建 …</p>
+        <br>
+        <a class="btn"
+           href="/jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia.html#jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/androidxiao-chu-tan-hao.html#androidxiao-chu-tan-hao">Android消除叹号</a></h2>
+    <p>
+      Posted on Fri 14 October 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>更新
+Android 7 开始地址变了，使用以下命令：</p>
+<div class="highlight"><pre><span></span>adb shell <span class="s2">&quot;settings put global captive_portal_https_url https://www.noisyfox.cn/generate_204&quot;</span>
+</pre></div>
+
+
+<p>使用adb将/generate204地址设置一下就可以了，可以使用如下命令：</p>
+<div class="highlight"><pre><span></span>adb shell <span class="s2">&quot;settings put global captive_portal_server captive.v2ex.co&quot;</span>
+</pre></div>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/archshi-yong-apricityoszhu-ti.html#archshi-yong-apricityoszhu-ti">Arch使用ApricityOS主题</a></h2>
+    <p>
+      Posted on Mon 13 June 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <h2>安装 ApricityOS 源</h2>
+<div class="highlight"><pre><span></span>wget http://apricityos.com/apricity-core-signed/apricity-icons-1.0.0-1-any.pkg.tar.xz
+yaourt -U apricity-icons-1.0.0-1-any.pkg.tar.xz
+</pre></div>
+
+
+<h2>编辑 <code>/etc/pacman.conf</code> 文件</h2>
+<div class="highlight"><pre><span></span><span class="k">[apricity-core]</span>
+<span class="na">SigLevel</span> <span class="o">=</span> <span class="s">Required</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">http://apricityos.com/apricity-core-signed/</span>
+</pre></div>
+
+
+<p>更新源数据库</p>
+<div class="highlight"><pre><span></span>yaourt -Syu
+</pre></div>
+
+
+<h2>安装主题</h2>
+<div class="highlight"><pre><span></span>yaourt -S apricity-themes-gnome apricity-icons apricity-keyring apricity-wallpapers
+</pre></div>
+  </div>
+</article>
+
+  <div class="pagination">
+    <a class="btn float-left" href="/category/misc2.html">
+      <i class="fa fa-angle-left"></i> Older Posts
+    </a>
+  </div>
+
+
+
+    <footer>
+<p>&copy;  </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Hello, World! ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>
