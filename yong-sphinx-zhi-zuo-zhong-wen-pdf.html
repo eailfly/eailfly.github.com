@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hello, World! Atom">
+
+
+
+
+
+<meta name="author" content="EaiLFly" />
+<meta name="description" content="[转自] 用 Sphinx 制作中文 pdf 最近一直在玩些少众的东西，感觉都是很棒的东西，可惜关于它们的资源比较少，中文的就更少，所以打算翻译其中一些觉得比较好的文档。 其中有些文档是用 Sphinx 制作的，有了文档的源码，翻译好再用 Sphinx 再次生成中文版的就可以。然而在生成 pdf 文档的过程却遇到很多问题。虽然 Sphinx 是用 Python 写的，Python 对 UTF8 编码的支持毋庸置疑，但生成 pdf 的过程是由 LaTeX 套件完成。问题在于 LaTeX 套件从开发之日起就没有考虑过支持如中文这样使用 Unicode 字符的语言。 google 了很久，经过了很多尝试，也在 stackoverflow.com 上问了一些高手，最终得到两个能够要达到这个目的方案。两个方案的效果都不太完美，不过还算差强人意了。 在 …" />
+<meta name="keywords" content="">
+
+
+<meta property="og:site_name" content="Hello, World!"/>
+<meta property="og:title" content="用 Sphinx 制作中文 pdf"/>
+<meta property="og:description" content="[转自] 用 Sphinx 制作中文 pdf 最近一直在玩些少众的东西，感觉都是很棒的东西，可惜关于它们的资源比较少，中文的就更少，所以打算翻译其中一些觉得比较好的文档。 其中有些文档是用 Sphinx 制作的，有了文档的源码，翻译好再用 Sphinx 再次生成中文版的就可以。然而在生成 pdf 文档的过程却遇到很多问题。虽然 Sphinx 是用 Python 写的，Python 对 UTF8 编码的支持毋庸置疑，但生成 pdf 的过程是由 LaTeX 套件完成。问题在于 LaTeX 套件从开发之日起就没有考虑过支持如中文这样使用 Unicode 字符的语言。 google 了很久，经过了很多尝试，也在 stackoverflow.com 上问了一些高手，最终得到两个能够要达到这个目的方案。两个方案的效果都不太完美，不过还算差强人意了。 在 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/yong-sphinx-zhi-zuo-zhong-wen-pdf.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-05-30 00:00:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/eailfly.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="">
+
+  <title>Hello, World! &ndash; 用 Sphinx 制作中文 pdf</title>
+
+</head>
+<body class="light-theme">
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+
+      <h1>
+        <a href=""></a>
+      </h1>
+
+
+
+      <nav>
+        <ul class="list">
+
+
+
+            <li>
+              <a target="_self" href="http://getpelican.com/" >Pelican</a>
+            </li>
+            <li>
+              <a target="_self" href="http://python.org/" >Python.org</a>
+            </li>
+            <li>
+              <a target="_self" href="http://jinja.pocoo.org/" >Jinja2</a>
+            </li>
+            <li>
+              <a target="_self" href="#" >You can modify those links in your config file</a>
+            </li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-You can add links in your config file" href="#" target="_blank">
+              <i class="fab fa-You can add links in your config file"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-Another social link" href="#" target="_blank">
+              <i class="fab fa-Another social link"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="yong-sphinx-zhi-zuo-zhong-wen-pdf">用 Sphinx 制作中文 pdf</h1>
+    <p>
+      Posted on Mon 30 May 2016 in <a href="/category/misc.html">misc</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>[转自] <a href="https://guts.me/2013/06/21/generate-pdf-containing-chinese-with-sphinx/">用 Sphinx 制作中文 pdf</a></p>
+<p>最近一直在玩些少众的东西，感觉都是很棒的东西，可惜关于它们的资源比较少，中文的就更少，所以打算翻译其中一些觉得比较好的文档。</p>
+<p>其中有些文档是用 Sphinx 制作的，有了文档的源码，翻译好再用 Sphinx 再次生成中文版的就可以。然而在生成 pdf 文档的过程却遇到很多问题。虽然 Sphinx 是用 Python 写的，Python 对 UTF8 编码的支持毋庸置疑，但生成 pdf 的过程是由 LaTeX 套件完成。问题在于 LaTeX 套件从开发之日起就没有考虑过支持如中文这样使用 Unicode 字符的语言。</p>
+<p>google 了很久，经过了很多尝试，也在 stackoverflow.com 上问了一些高手，最终得到两个能够要达到这个目的方案。两个方案的效果都不太完美，不过还算差强人意了。</p>
+<p>在 Arch Linux 上需要安装的软件包有：</p>
+<div class="highlight"><pre><span></span>pacman -S make python-sphinx texlive-langextra texlive-langcjk
+</pre></div>
+
+
+<p>安装时使用默认的选项，其他依赖的软件包也会一同被安装上了。安装完后可以使用</p>
+<div class="highlight"><pre><span></span>latex -v
+</pre></div>
+
+
+<p>来查看具体安装到的 LaTeX 套件版本。</p>
+<p>若是 Ubuntu，也需要安装同样的软件包：</p>
+<div class="highlight"><pre><span></span>apt-get install make python-sphinx texlive-full
+</pre></div>
+
+
+<p>两个方案所述的 pdf 制作方法，不仅适用于中文，也适用于日文和韩文。其实是因为上面安装软件包时选择了 CJK 组件，CJK 就是 Chinese、Japanese、Korean 的缩写</p>
+<h2>方案1、使用 LaTeX 及 CJK 自带的字体</h2>
+<p>上面安装 LaTeX 套件的时候也安装了 CJK 字体。其中有 4 种中文字体：gbsn(简体宋体)、gkai(简体楷体)、bsmi(繁体明体)和 bkai(繁体楷体)。选择字体的时候一定要简体选简体的字体，繁体选繁体的字体，否则生成的 pdf 文档会出现文字缺失。选择好字体就可以在 conf.py 的 latex_elements 选项中添加相关的配置内容：</p>
+<div class="highlight"><pre><span></span><span class="n">latex_elements</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;preamble&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">hypersetup{unicode=true}</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{CJKutf8}</span><span class="s1"></span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">AtBeginDocument{</span><span class="se">\\</span><span class="s1">begin</span><span class="si">{CJK}{UTF8}{gbsn}</span><span class="s1">}</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">AtEndDocument{</span><span class="se">\\</span><span class="s1">end</span><span class="si">{CJK}</span><span class="s1">}</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>其中 <code>\hypersetup</code> 是用于设置生成的 pdf 的书签使用 Unicode 字符，否则会出现乱码。</p>
+<p>修改完 conf.py 后，就可以执行 Sphinx 项目的 <code>make latexpdf</code> 命令生成 pdf 文档了。</p>
+<p>如果在 conf.py 的 latex_document 选项中文档标题的内容或作者的内容里包含有 Unicode 字符，可能会出现下面这些莫名其妙的错误：</p>
+<div class="highlight"><pre><span></span>...
+<span class="o">(</span>/usr/share/texmf-dist/tex/latex/cjk/texinput/UTF8/UTF8.bdg<span class="o">)</span>
+<span class="o">(</span>/usr/share/texmf-dist/tex/latex/cjk/texinput/UTF8/UTF8.enc<span class="o">)</span>
+<span class="o">(</span>/usr/share/texmf-dist/tex/latex/cjk/texinput/UTF8/UTF8.chr<span class="o">)</span>
+! Extra <span class="se">\e</span>lse.
+<span class="se">\C</span>JK@XXX ...<span class="se">\n</span>umber <span class="sb">`</span><span class="c1">#1\endcsname {`#2}{`#3}\else</span>
+                                              <span class="se">\c</span>sname u8:<span class="se">\s</span>tring <span class="c1">#1\stri...</span>
+l.32 <span class="se">\t</span>ableofcontents
+
+?
+</pre></div>
+
+
+<p>这是由于 Sphinx 在生成 LaTeX 文档时会用 CJK 字符直接替换掉相应的占位符。而 CJK 字符本身就是宏，不应该直接写入 pdf 流中。因为不想修改 Sphinx 的文档类文件 sphinxmanual.cls，所以采取一个投机取巧的方法来处理。用 \unexpanded 将 Unicode 字符括起来：</p>
+<div class="highlight"><pre><span></span><span class="n">latex_documents</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;AnIntroductiontolibuv.tex&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;title </span><span class="se">\\</span><span class="s1">unexpanded</span><span class="si">{中文内容}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">unexpanded</span><span class="si">{中文作者}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;manual&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<h2>方案2、使用 ReTeX 及系统字体</h2>
+<p>ReTeX 是专门为生成 Unicode pdf 文档而生 LaTeX 组件，使用上与 LaTeX 差不多。区别是 XeTeX 使用的是系统已安装的字体，这可以解决 LaTeX 字体缺乏的问题。但在测试过程中，只在 Ubuntu 上成功生成 pdf 文档，在 Arch Linux 上则出现错误。google 了一下原因大概是 XeCJK 与新版的 LaTeX 不兼容。</p>
+<p>使用 ReTeX 的第一步也是确定要使用的字体。使用</p>
+<div class="highlight"><pre><span></span>fc-list :lang<span class="o">=</span>zh
+</pre></div>
+
+
+<p>来查看系统中已安装的中文字体。</p>
+<p>选择好字体后，同样需要修改 conf.py 文件中的 latex_elements 选项：</p>
+<div class="highlight"><pre><span></span><span class="n">latex_elements</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;preamble&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{xeCJK}</span><span class="s1"></span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{indentfirst}</span><span class="s1"></span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">setlength{</span><span class="se">\\</span><span class="s1">parindent}</span><span class="si">{2em}</span><span class="s1"></span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">setCJKmainfont{WenQuanYi Zen Hei Sharp}</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">setCJKmonofont[Scale=0.9]{WenQuanYi Zen Hei Mono}</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">setCJKfamilyfont</span><span class="si">{song}</span><span class="s1">{WenQuanYi Zen Hei}</span>
+<span class="s1">    </span><span class="se">\\</span><span class="s1">setCJKfamilyfont</span><span class="si">{sf}</span><span class="s1">{WenQuanYi Zen Hei}</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>主要是在 \setCJKmainfont、\setCJKmonofont、\setCJKfamilyfont{song} 和 \setCJKfamilyfont{sf} 最后的大括号里填入想要使用的字体名称，即 fc-list 命令列出的名称。</p>
+<p>而使用 XeTeX 时，conf.py 里的 latex_document 选项中的标题及作者内容不需要用 \unexpanded 括起 Unicode 字符。</p>
+<p>生成 pdf 时，首先执行 Sphinx 项目下的</p>
+<div class="highlight"><pre><span></span>make latex
+</pre></div>
+
+
+<p>得到需要的 .tex 文件，如 mybook.tex，进入其中的 build/latex 目录中，执行两次下面的命令</p>
+<div class="highlight"><pre><span></span>xelatex mybook.tex
+</pre></div>
+
+
+<p>至于为什么要执行两次，在网上能找到的文章都说为了正确生成书签。而我的实验结果是，第一次执行生成的 pdf 文档中没有书签，第二次执行后才生成书签。可能是 XeTeX 具体实现机制的问题吧，不去深究了。</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Hello, World! ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Hello, World! Atom">
+
+
+
+
+
+<meta name="author" content="EaiLFly" />
+<meta name="description" content="本文使用代理的方式来部署集群。 服务器信息 master: 192.168.25.148 node: 192.168.25.149 master + node 前期准备 配置 hostname hostnamectl --static set-hostname master hostname master 编辑 /etc/hosts, 添加一下内容 192.168.25.148 master 192.168.25.149 node 配置防火墙 关闭防火墙。 systemctl disable firewalld systemctl stop firewalld iptables -F 配置 selinux 关闭 …" />
+<meta name="keywords" content="">
+
+
+<meta property="og:site_name" content="Hello, World!"/>
+<meta property="og:title" content="kubeadm 部署 kubernetes 集群"/>
+<meta property="og:description" content="本文使用代理的方式来部署集群。 服务器信息 master: 192.168.25.148 node: 192.168.25.149 master + node 前期准备 配置 hostname hostnamectl --static set-hostname master hostname master 编辑 /etc/hosts, 添加一下内容 192.168.25.148 master 192.168.25.149 node 配置防火墙 关闭防火墙。 systemctl disable firewalld systemctl stop firewalld iptables -F 配置 selinux 关闭 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/kubeadm-bu-shu-kubernetes-ji-qun.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-10-20 14:22:06+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/eailfly.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="">
+
+  <title>Hello, World! &ndash; kubeadm 部署 kubernetes 集群</title>
+
+</head>
+<body class="light-theme">
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+
+      <h1>
+        <a href=""></a>
+      </h1>
+
+
+
+      <nav>
+        <ul class="list">
+
+
+
+            <li>
+              <a target="_self" href="http://getpelican.com/" >Pelican</a>
+            </li>
+            <li>
+              <a target="_self" href="http://python.org/" >Python.org</a>
+            </li>
+            <li>
+              <a target="_self" href="http://jinja.pocoo.org/" >Jinja2</a>
+            </li>
+            <li>
+              <a target="_self" href="#" >You can modify those links in your config file</a>
+            </li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-You can add links in your config file" href="#" target="_blank">
+              <i class="fab fa-You can add links in your config file"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-Another social link" href="#" target="_blank">
+              <i class="fab fa-Another social link"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="kubeadm-bu-shu-kubernetes-ji-qun">kubeadm 部署 kubernetes 集群</h1>
+    <p>
+      Posted on Fri 20 October 2017 in <a href="/category/misc.html">misc</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>本文使用代理的方式来部署集群。</p>
+<h1>服务器信息</h1>
+<ul>
+<li>master: 192.168.25.148</li>
+<li>node: 192.168.25.149</li>
+</ul>
+<h1>master + node</h1>
+<p>前期准备</p>
+<h3>配置 hostname</h3>
+<div class="highlight"><pre><span></span>hostnamectl --static set-hostname master
+hostname master
+</pre></div>
+
+
+<p>编辑 <code>/etc/hosts</code>, 添加一下内容</p>
+<div class="highlight"><pre><span></span><span class="m">192</span>.168.25.148 master
+<span class="m">192</span>.168.25.149 node
+</pre></div>
+
+
+<h3>配置防火墙</h3>
+<p>关闭防火墙。</p>
+<div class="highlight"><pre><span></span>systemctl disable firewalld
+systemctl stop firewalld
+iptables -F
+</pre></div>
+
+
+<h3>配置 selinux</h3>
+<p>关闭 SELinux</p>
+<div class="highlight"><pre><span></span>setenforce <span class="m">0</span>
+</pre></div>
+
+
+<p>编辑 <code>/etc/selinux/conf</code></p>
+<div class="highlight"><pre><span></span><span class="c1"># 将以下内容</span>
+<span class="nv">SELINUX</span><span class="o">=</span>enforcing
+<span class="c1"># 替换为以下内容</span>
+<span class="nv">SELINUX</span><span class="o">=</span>disabled
+</pre></div>
+
+
+<h3>关闭 swap</h3>
+<div class="highlight"><pre><span></span>swapoff -a
+</pre></div>
+
+
+<p>修改 <code>/etc/fstab</code> ，注释掉 swap 的自动挂载。</p>
+<h3>配置系统</h3>
+<p>创建 <code>/etc/sysctl.d/k8s.conf</code> ，添加如下内容</p>
+<div class="highlight"><pre><span></span>net.bridge.bridge-nf-call-ip6tables <span class="o">=</span> <span class="mi">1</span>
+net.bridge.bridge-nf-call-iptables <span class="o">=</span> <span class="mi">1</span>
+vm.swappiness <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+
+
+<p>执行修改</p>
+<div class="highlight"><pre><span></span>modprobe br_netfilter
+sysctl -p /etc/sysctl.d/k8s.conf
+</pre></div>
+
+
+<p><code>sysctl -p /etc/sysctl.d/k8s.conf</code></p>
+<p>安装 Docker</p>
+<h3>安装依赖和工具</h3>
+<div class="highlight"><pre><span></span>yum install -y yum-utils <span class="se">\</span>
+     device-mapper-persistent-data <span class="se">\</span>
+     lvm2
+</pre></div>
+
+
+<h3>添加官方源</h3>
+<div class="highlight"><pre><span></span>yum-config-manager <span class="se">\</span>
+     --add-repo <span class="se">\</span>
+     https://download.docker.com/linux/centos/docker-ce.repo
+</pre></div>
+
+
+<h3>安装 Docker CE</h3>
+<p>Kubernetes 1.8 已经针对 Docker 的 1.11.2, 1.12.6, 1.13.1 和 17.03.2
+等版本做了验证。 因为我们这里在各节点安装 docker 的 17.03.2 版本。</p>
+<div class="highlight"><pre><span></span>yum install -y --setopt<span class="o">=</span><span class="nv">obsoletes</span><span class="o">=</span><span class="m">0</span> <span class="se">\</span>
+    docker-ce-17.03.2.ce-1.el7.centos <span class="se">\</span>
+    docker-ce-selinux-17.03.2.ce-1.el7.centos
+</pre></div>
+
+
+<h3>配置防火墙</h3>
+<p>Docker 从 1.13 版本开始调整了默认的防火墙规则，禁用了 iptables filter
+表中 FOWARD 链，这样会引起 Kubernetes 集群中跨 Node 的 Pod
+无法通信，在各个 Docker 节点执行下面的命令：</p>
+<div class="highlight"><pre><span></span>iptables -P FORWARD ACCEPT
+</pre></div>
+
+
+<p>可在 docker 的 systemd unit 文件中以 ExecStartPost 加入上面的命令：</p>
+<div class="highlight"><pre><span></span>ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
+</pre></div>
+
+
+<h3>配置 Docker 代理</h3>
+<div class="highlight"><pre><span></span>$ mkdir -p /etc/systemd/system/docker.service.d/
+$ vi /etc/systemd/system/docker.service.d/http-proxy.conf
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">Environment</span><span class="o">=</span><span class="s2">&quot;HTTP_PROXY=http://192.168.25.147:8118/&quot;</span> <span class="s2">&quot;HTTPS_PROXY=http://192.168.25.147:8118/&quot;</span> <span class="s2">&quot;NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,192.168.25.148,192.168.25.149&quot;</span>
+</pre></div>
+
+
+<h3>启动 Docker</h3>
+<div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> docker
+systemctl start docker
+</pre></div>
+
+
+<p>配置翻墙</p>
+<p>略</p>
+<p>安装 kubelet、kubectl 和 kubeadm</p>
+<p>这两个包所有机器都需要安装。</p>
+<h3>配置 kubernetes 源</h3>
+<div class="highlight"><pre><span></span>cat <span class="s">&lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span>
+<span class="s">[kubernetes]</span>
+<span class="s">name=Kubernetes</span>
+<span class="s">baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span>
+<span class="s">enabled=1</span>
+<span class="s">gpgcheck=1</span>
+<span class="s">repo_gpgcheck=1</span>
+<span class="s">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg</span>
+<span class="s">        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span>
+<span class="s">EOF</span>
+</pre></div>
+
+
+<h3>YUM 配置代理及缓存</h3>
+<div class="highlight"><pre><span></span>$ vi /etc/yum.conf
+...
+<span class="nv">proxy</span><span class="o">=</span>socks5://127.0.0.1:1080
+...
+</pre></div>
+
+
+<h3>安装包</h3>
+<div class="highlight"><pre><span></span>yum install -y kubelet kubeadm kubectl
+</pre></div>
+
+
+<h3>更改 cgroup 驱动方式</h3>
+<p>docker 和 kubelet 的 cgroup 驱动方式可能不同，需要进行修复
+编辑此文件，更改下面一行 <code>/etc/docker/daemon.json</code></p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;exec-opts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;native.cgroupdriver=systemd&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>重启 docker</p>
+<div class="highlight"><pre><span></span>systemctl restart docker
+</pre></div>
+
+
+<h3>启动服务</h3>
+<div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> kubelet
+systemctl start kubelet
+</pre></div>
+
+
+<h1>master</h1>
+<p>初始化集群</p>
+<h3>配置代理</h3>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NO_PROXY</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1,10.0.0.0/8,192.168.25.148&quot;</span>
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>http://127.0.0.1:8118/
+<span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:8118/
+</pre></div>
+
+
+<h3>初始化</h3>
+<p><strong>注意，输出的最后一行请记下，一会添加 node 的时候要用</strong></p>
+<div class="highlight"><pre><span></span>$ kubeadm init --kubernetes-version<span class="o">=</span>v1.8.1 --pod-network-cidr<span class="o">=</span><span class="m">10</span>.244.0.0/16 --token-ttl <span class="m">0</span>
+<span class="o">[</span>kubeadm<span class="o">]</span> WARNING: kubeadm is in beta, please <span class="k">do</span> not use it <span class="k">for</span> production clusters.
+<span class="o">[</span>init<span class="o">]</span> Using Kubernetes version: v1.8.1
+<span class="o">[</span>init<span class="o">]</span> Using Authorization modes: <span class="o">[</span>Node RBAC<span class="o">]</span>
+<span class="o">[</span>kubeadm<span class="o">]</span> WARNING: starting in <span class="m">1</span>.8, tokens expire after <span class="m">24</span> hours by default <span class="o">(</span><span class="k">if</span> you require a non-expiring token use --token-ttl <span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>certificates<span class="o">]</span> Generated CA certificate and key.
+<span class="o">[</span>certificates<span class="o">]</span> Generated API server certificate and key.
+<span class="o">[</span>certificates<span class="o">]</span> API Server serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>k8s kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local<span class="o">]</span> and IPs <span class="o">[</span><span class="m">10</span>.96.0.1 <span class="m">192</span>.168.25.148<span class="o">]</span>
+<span class="o">[</span>certificates<span class="o">]</span> Generated API server kubelet client certificate and key.
+<span class="o">[</span>certificates<span class="o">]</span> Generated service account token signing key and public key.
+<span class="o">[</span>certificates<span class="o">]</span> Generated front-proxy CA certificate and key.
+<span class="o">[</span>certificates<span class="o">]</span> Generated front-proxy client certificate and key.
+<span class="o">[</span>certificates<span class="o">]</span> Valid certificates and keys now exist in <span class="s2">&quot;/etc/kubernetes/pki&quot;</span>
+<span class="o">[</span>kubeconfig<span class="o">]</span> Wrote KubeConfig file to disk: <span class="s2">&quot;/etc/kubernetes/scheduler.conf&quot;</span>
+<span class="o">[</span>kubeconfig<span class="o">]</span> Wrote KubeConfig file to disk: <span class="s2">&quot;/etc/kubernetes/admin.conf&quot;</span>
+<span class="o">[</span>kubeconfig<span class="o">]</span> Wrote KubeConfig file to disk: <span class="s2">&quot;/etc/kubernetes/kubelet.conf&quot;</span>
+<span class="o">[</span>kubeconfig<span class="o">]</span> Wrote KubeConfig file to disk: <span class="s2">&quot;/etc/kubernetes/controller-manager.conf&quot;</span>
+<span class="o">[</span>apiclient<span class="o">]</span> Created API client, waiting <span class="k">for</span> the control plane to become ready
+&lt;-&gt; 这里会停的比较久，要去下载镜像，然后还得启动容器
+<span class="o">[</span>apiclient<span class="o">]</span> All control plane components are healthy after <span class="m">293</span>.004469 seconds
+<span class="o">[</span>token<span class="o">]</span> Using token: 2af779.b803df0b1effb3d9
+<span class="o">[</span>apiconfig<span class="o">]</span> Created RBAC rules
+<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: kube-proxy
+<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: kube-dns
+
+Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run <span class="o">(</span>as a regular user<span class="o">)</span>:
+
+mkdir -p <span class="nv">$HOME</span>/.kube
+sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run <span class="s2">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:
+http://kubernetes.io/docs/admin/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+kubeadm join --token 2af779.b803df0b1effb3d9 <span class="m">192</span>.168.25.148:6443
+</pre></div>
+
+
+<p>监控安装情况命令有：docker ps, docker images, journalctl -xeu kubelet
+(/var/log/messages) 。
+如果有镜像下载和容器新增，说明安装过程在进行中。否则得检查下你的代理是否正常工作了！</p>
+<h3>配置 kubectl</h3>
+<p>按照初始化时候的输出说明，以普通用户执行</p>
+<div class="highlight"><pre><span></span>mkdir -p <span class="nv">$HOME</span>/.kube
+sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</pre></div>
+
+
+<p>安装 flannel</p>
+<div class="highlight"><pre><span></span>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+</pre></div>
+
+
+<p>可选：master 参与运算</p>
+<p>默认情况下 master 服务器是不参与运算的，pods 不会在 master
+上运行，如果需要 pods 在 master 上运行，可执行一下命令</p>
+<div class="highlight"><pre><span></span>$ kubectl taint nodes --all node-role.kubernetes.io/master-
+node <span class="s2">&quot;master&quot;</span> untainted
+</pre></div>
+
+
+<p>安装 dashboard</p>
+<p>官方推荐的安装 dashboard 的方法如下</p>
+<div class="highlight"><pre><span></span>kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+</pre></div>
+
+
+<p>kubernetes-dashboard.yaml 文件中的 ServiceAccount kubernetes-dashboard
+只有相对较小的权限，因此我们创建一个 kubernetes-dashboard-admin 的
+ServiceAccount 并授予集群 admin 的权限，创建
+kubernetes-dashboard-admin.rbac.yaml：</p>
+<div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">k8s-app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes-dashboard</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes-dashboard-admin</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+
+<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes-dashboard-admin</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">k8s-app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes-dashboard</span>
+<span class="nt">roleRef</span><span class="p">:</span>
+  <span class="nt">apiGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+  <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
+<span class="nt">subjects</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes-dashboard-admin</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>kubectl create -f kubernetes-dashboard-admin.rbac.yaml
+</pre></div>
+
+
+<p>查看 kubernete-dashboard-admin 的 token:</p>
+<div class="highlight"><pre><span></span>kubectl -n kube-system get secret <span class="p">|</span> grep kubernetes-dashboard-admin
+kubernetes-dashboard-admin-token-pfss5   kubernetes.io/service-account-token   <span class="m">3</span>         14s
+
+ kubectl describe -n kube-system secret/kubernetes-dashboard-admin-token-pfss5
+Name:         kubernetes-dashboard-admin-token-pfss5
+Namespace:    kube-system
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name<span class="o">=</span>kubernetes-dashboard-admin
+              kubernetes.io/service-account.uid<span class="o">=</span>1029250a-ad76-11e7-9a1d-08002778b8a1
+
+Type:  kubernetes.io/service-account-token
+
+<span class="nv">Data</span>
+<span class="o">====</span>
+ca.crt:     <span class="m">1025</span> bytes
+namespace:  <span class="m">11</span> bytes
+token:      eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbi10b2tlbi1wZnNzNSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjEwMjkyNTBhLWFkNzYtMTFlNy05YTFkLTA4MDAyNzc4YjhhMSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiJ9.Bs6h65aFCFkEKBO_h4muoIK3XdTcfik-pNM351VogBJD_pk5grM1PEWdsCXpR45r8zUOTpGM-h8kDwgOXwy2i8a5RjbUTzD3OQbPJXqa1wBk0ABkmqTuw-3PWMRg_Du8zuFEPdKDFQyWxiYhUi_v638G-R5RdZD_xeJAXmKyPkB3VsqWVegoIVTaNboYkw6cgvMa-4b7IjoN9T1fFlWCTZI8BFXbM8ICOoYMsOIJr3tVFf7d6oVNGYqaCk42QL_2TfB6xMKLYER9XDh753-_FDVE5ENtY5YagD3T_s44o0Ewara4P9C3hYRKdJNLxv7qDbwPl3bVFH3HXbsSxxF3TQ
+</pre></div>
+
+
+<p>查看安装状态</p>
+<div class="highlight"><pre><span></span>kubectl get pods --all-namespaces
+</pre></div>
+
+
+<p>安装 Heapster</p>
+<p>pods、镜像、容器列表</p>
+<h3>pods 列表</h3>
+<div class="highlight"><pre><span></span>$ kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                    READY     STATUS    RESTARTS   AGE       IP               NODE
+kube-system   etcd-master                             <span class="m">1</span>/1       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kube-apiserver-master                   <span class="m">1</span>/1       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kube-controller-manager-master          <span class="m">1</span>/1       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kube-dns-2425271678-t88zz               <span class="m">3</span>/3       Running   <span class="m">0</span>          23h       <span class="m">10</span>.244.0.2       master
+kube-system   kube-flannel-ds-1kc48                   <span class="m">2</span>/2       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kube-proxy-kc2bf                        <span class="m">1</span>/1       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kube-scheduler-master                   <span class="m">1</span>/1       Running   <span class="m">0</span>          23h       <span class="m">192</span>.168.25.148   master
+kube-system   kubernetes-dashboard-3313488171-x9rj7   <span class="m">1</span>/1       Running   <span class="m">0</span>          1h        <span class="m">10</span>.244.2.7       master
+</pre></div>
+
+
+<h3>镜像列表</h3>
+<div class="highlight"><pre><span></span>$ docker images
+REPOSITORY                                               TAG                 IMAGE ID            CREATED             SIZE
+gcr.io/google_containers/kube-controller-manager-amd64   v1.7.6              028bd65dc783        <span class="m">2</span> days ago          138MB
+gcr.io/google_containers/kube-scheduler-amd64            v1.7.6              c3101592d24c        <span class="m">2</span> days ago          <span class="m">77</span>.2MB
+gcr.io/google_containers/kube-apiserver-amd64            v1.7.6              f15a956e781d        <span class="m">2</span> days ago          186MB
+gcr.io/google_containers/kube-proxy-amd64                v1.7.6              af674cbf7039        <span class="m">2</span> days ago          115MB
+gcr.io/google_containers/kubernetes-dashboard-amd64      v1.6.3              691a82db1ecd        <span class="m">7</span> weeks ago         139MB
+quay.io/coreos/flannel                                   v0.8.0-amd64        9db3bab8c19e        <span class="m">2</span> months ago        <span class="m">50</span>.7MB
+gcr.io/google_containers/k8s-dns-sidecar-amd64           <span class="m">1</span>.14.4              38bac66034a6        <span class="m">2</span> months ago        <span class="m">41</span>.8MB
+gcr.io/google_containers/k8s-dns-kube-dns-amd64          <span class="m">1</span>.14.4              a8e00546bcf3        <span class="m">2</span> months ago        <span class="m">49</span>.4MB
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64     <span class="m">1</span>.14.4              f7f45b9cb733        <span class="m">2</span> months ago        <span class="m">41</span>.4MB
+gcr.io/google_containers/etcd-amd64                      <span class="m">3</span>.0.17              243830dae7dd        <span class="m">6</span> months ago        169MB
+gcr.io/google_containers/kube-controller-manager-amd64   v1.5.1              cd5684031720        <span class="m">9</span> months ago        102MB
+gcr.io/google_containers/pause-amd64                     <span class="m">3</span>.0                 99e59f495ffa        <span class="m">16</span> months ago       747kB
+</pre></div>
+
+
+<h3>容器列表</h3>
+<div class="highlight"><pre><span></span>$ docker ps
+CONTAINER ID        IMAGE                                                    COMMAND                  CREATED             STATUS              PORTS               NAMES
+a4d8b0bf22d3        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">2</span> hours ago         Up <span class="m">2</span> hours                              k8s_POD_webserver-1536865423-8hl0k_default_641b74c8-9adb-11e7-9155-0800277a98f8_0
+b68479595f3e        gcr.io/google_containers/k8s-dns-sidecar-amd64           <span class="s2">&quot;/sidecar --v=2 --...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_sidecar_kube-dns-2425271678-t88zz_kube-system_b024d020-9a25-11e7-9155-0800277a98f8_0
+36229b640403        gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64     <span class="s2">&quot;/dnsmasq-nanny -v...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_dnsmasq_kube-dns-2425271678-t88zz_kube-system_b024d020-9a25-11e7-9155-0800277a98f8_0
+3477ef11db9b        gcr.io/google_containers/k8s-dns-kube-dns-amd64          <span class="s2">&quot;/kube-dns --domai...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kubedns_kube-dns-2425271678-t88zz_kube-system_b024d020-9a25-11e7-9155-0800277a98f8_0
+0f12257309a0        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-dns-2425271678-t88zz_kube-system_b024d020-9a25-11e7-9155-0800277a98f8_0
+0b25355d63ae        quay.io/coreos/flannel                                   <span class="s2">&quot;/opt/bin/flanneld...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kube-flannel_kube-flannel-ds-1kc48_kube-system_000e10bb-9a26-11e7-9155-0800277a98f8_0
+86afd9070a0b        quay.io/coreos/flannel                                   <span class="s2">&quot;/bin/sh -c &#39;set -...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_install-cni_kube-flannel-ds-1kc48_kube-system_000e10bb-9a26-11e7-9155-0800277a98f8_0
+24c225bb39b3        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-flannel-ds-1kc48_kube-system_000e10bb-9a26-11e7-9155-0800277a98f8_0
+2891cc49e1c0        gcr.io/google_containers/kube-proxy-amd64                <span class="s2">&quot;/usr/local/bin/ku...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kube-proxy_kube-proxy-kc2bf_kube-system_b020a533-9a25-11e7-9155-0800277a98f8_0
+cbfdb21bc55d        gcr.io/google_containers/kube-scheduler-amd64            <span class="s2">&quot;kube-scheduler --...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kube-scheduler_kube-scheduler-k8s_kube-system_2b08b8f69c973df2fbf99ddef86b56ef_0
+65072be8dc4f        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-proxy-kc2bf_kube-system_b020a533-9a25-11e7-9155-0800277a98f8_0
+82cd164def30        gcr.io/google_containers/kube-controller-manager-amd64   <span class="s2">&quot;kube-controller-m...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kube-controller-manager_kube-controller-manager-k8s_kube-system_c0244259dda50419552580ddd0c049f3_0
+d840219ca5bb        gcr.io/google_containers/kube-apiserver-amd64            <span class="s2">&quot;kube-apiserver --...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_kube-apiserver_kube-apiserver-k8s_kube-system_f3d9d19161b9f95170a67c2834ba1c8b_0
+3f0509a245b8        gcr.io/google_containers/etcd-amd64                      <span class="s2">&quot;etcd --listen-cli...&quot;</span>   <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_etcd_etcd-k8s_kube-system_9ef6d25e21bb4befeabe4d0e4f72d1ca_0
+e3858cbeff18        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-scheduler-k8s_kube-system_2b08b8f69c973df2fbf99ddef86b56ef_0
+ddd174443dc7        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-controller-manager-k8s_kube-system_c0244259dda50419552580ddd0c049f3_0
+430e89f47f1d        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_kube-apiserver-k8s_kube-system_f3d9d19161b9f95170a67c2834ba1c8b_0
+b3134e793b2c        gcr.io/google_containers/pause-amd64:3.0                 <span class="s2">&quot;/pause&quot;</span>                 <span class="m">24</span> hours ago        Up <span class="m">24</span> hours                             k8s_POD_etcd-k8s_kube-system_9ef6d25e21bb4befeabe4d0e4f72d1ca_0
+</pre></div>
+
+
+<h1>node</h1>
+<p>加入集群</p>
+<p>使用初始化集群时提示的命令加入集群</p>
+<div class="highlight"><pre><span></span>kubeadm join --token 2af779.b803df0b1effb3d9 <span class="m">192</span>.168.25.148:6443
+</pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Hello, World! ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>
