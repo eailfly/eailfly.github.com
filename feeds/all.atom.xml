@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Hello, World!</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2020-07-13T16:50:00+08:00</updated><entry><title>测试 GitHub Actions 部署 Pelican</title><link href="/ce-shi-github-actions-bu-shu-pelican.html" rel="alternate"></link><published>2020-07-13T16:50:00+08:00</published><updated>2020-07-13T16:50:00+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2020-07-13:/ce-shi-github-actions-bu-shu-pelican.html</id><content type="html">&lt;p&gt;这篇文章是为了测试&lt;code&gt;Github Actions&lt;/code&gt;部署&lt;code&gt;Pelican&lt;/code&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Hello, World!</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2020-07-13T17:06:00+08:00</updated><entry><title>使用 Github Actions 部署 Pelican</title><link href="/shi-yong-github-actions-bu-shu-pelican.html" rel="alternate"></link><published>2020-07-13T17:06:00+08:00</published><updated>2020-07-13T17:06:00+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2020-07-13:/shi-yong-github-actions-bu-shu-pelican.html</id><summary type="html">&lt;p&gt;使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用&lt;code&gt;Github Actions&lt;/code&gt; 自动发布页面的方法。&lt;/p&gt;
+&lt;h2&gt;创建 Personal Token&lt;/h2&gt;
+&lt;p&gt;在&lt;a href="https://github.com/settings/tokens"&gt;这里&lt;/a&gt;创建Personal Token.&lt;/p&gt;
+&lt;p&gt;然后在project的&lt;code&gt;Setting-Secrets&lt;/code&gt;添加一个 Name 是&lt;code&gt;PERSONAL_TOKEN&lt;/code&gt;，Value 是刚才生成的Token的 Secrets。&lt;/p&gt;
+&lt;h2&gt;创建 Actions&lt;/h2&gt;
+&lt;p&gt;在 &lt;code&gt;sources&lt;/code&gt; 分支添加&lt;code&gt;.github/workflows/publish.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Publish&lt;/span&gt;
+
+&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;push&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;sources&lt;/span&gt;
+
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;build-and-deploy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;actions/checkout@v2 …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用&lt;code&gt;Github Actions&lt;/code&gt; 自动发布页面的方法。&lt;/p&gt;
+&lt;h2&gt;创建 Personal Token&lt;/h2&gt;
+&lt;p&gt;在&lt;a href="https://github.com/settings/tokens"&gt;这里&lt;/a&gt;创建Personal Token.&lt;/p&gt;
+&lt;p&gt;然后在project的&lt;code&gt;Setting-Secrets&lt;/code&gt;添加一个 Name 是&lt;code&gt;PERSONAL_TOKEN&lt;/code&gt;，Value 是刚才生成的Token的 Secrets。&lt;/p&gt;
+&lt;h2&gt;创建 Actions&lt;/h2&gt;
+&lt;p&gt;在 &lt;code&gt;sources&lt;/code&gt; 分支添加&lt;code&gt;.github/workflows/publish.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Publish&lt;/span&gt;
+
+&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;push&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;sources&lt;/span&gt;
+
+&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;build-and-deploy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ubuntu-latest&lt;/span&gt;
+
+    &lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;actions/checkout@v2&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;actions/setup-python@v2&lt;/span&gt;
+        &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;python-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.7&amp;quot;&lt;/span&gt;
+
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Install Dependencies&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;|&lt;/span&gt;
+          &lt;span class="no"&gt;python -m pip install --upgrade pip&lt;/span&gt;
+          &lt;span class="no"&gt;pip install -r requirements.txt&lt;/span&gt;
+          &lt;span class="no"&gt;git clone https://github.com/alexandrevicenzi/Flex.git&lt;/span&gt;
+          &lt;span class="no"&gt;pelican-themes -i Flex&lt;/span&gt;
+
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Build Production Site&lt;/span&gt;
+        &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;|&lt;/span&gt;
+          &lt;span class="no"&gt;make publish&lt;/span&gt;
+          &lt;span class="no"&gt;cp README.md output/README.md&lt;/span&gt;
+          &lt;span class="no"&gt;touch output/.nojekyll&lt;/span&gt;
+
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Deploy To Master Branch&lt;/span&gt;
+        &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;peaceiris/actions-gh-pages@v3&lt;/span&gt;
+        &lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+          &lt;span class="nt"&gt;publish_branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;
+          &lt;span class="nt"&gt;publish_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./output&lt;/span&gt;
+          &lt;span class="nt"&gt;personal_token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;${{ secrets.PERSONAL_TOKEN }}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="misc"></category></entry><entry><title>测试 GitHub Actions 部署 Pelican</title><link href="/ce-shi-github-actions-bu-shu-pelican.html" rel="alternate"></link><published>2020-07-13T16:50:00+08:00</published><updated>2020-07-13T16:50:00+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2020-07-13:/ce-shi-github-actions-bu-shu-pelican.html</id><content type="html">&lt;p&gt;这篇文章是为了测试&lt;code&gt;Github Actions&lt;/code&gt;部署&lt;code&gt;Pelican&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</content><category term="misc"></category></entry><entry><title>树莓派自动重连WiFi</title><link href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html" rel="alternate"></link><published>2020-07-13T11:14:00+08:00</published><updated>2020-07-13T11:14:00+08:00</updated><author><name>EaiLFly</name></author><id>tag:None,2020-07-13:/shu-mei-pai-zi-dong-zhong-lian-wifi.html</id><summary type="html">&lt;p&gt;树莓派断网后不会自动重连Wifi，网上找到了解决方案&lt;/p&gt;

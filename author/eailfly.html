@@ -92,6 +92,43 @@
 
 <article>
   <header>
+    <h2><a href="/shi-yong-github-actions-bu-shu-pelican.html#shi-yong-github-actions-bu-shu-pelican">使用 Github Actions 部署 Pelican</a></h2>
+    <p>
+      Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用<code>Github Actions</code> 自动发布页面的方法。</p>
+<h2>创建 Personal Token</h2>
+<p>在<a href="https://github.com/settings/tokens">这里</a>创建Personal Token.</p>
+<p>然后在project的<code>Setting-Secrets</code>添加一个 Name 是<code>PERSONAL_TOKEN</code>，Value 是刚才生成的Token的 Secrets。</p>
+<h2>创建 Actions</h2>
+<p>在 <code>sources</code> 分支添加<code>.github/workflows/publish.yaml</code></p>
+<div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Publish</span>
+
+<span class="nt">on</span><span class="p">:</span>
+  <span class="nt">push</span><span class="p">:</span>
+    <span class="nt">branches</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sources</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+  <span class="nt">build-and-deploy</span><span class="p">:</span>
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+
+    <span class="nt">steps</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2 …</span></pre></div>
+        <br>
+        <a class="btn"
+           href="/shi-yong-github-actions-bu-shu-pelican.html#shi-yong-github-actions-bu-shu-pelican">
+          Continue reading
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/ce-shi-github-actions-bu-shu-pelican.html#ce-shi-github-actions-bu-shu-pelican">测试 GitHub Actions 部署 Pelican</a></h2>
     <p>
       Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
@@ -350,28 +387,6 @@ iptables -F
            href="/jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia.html#jiang-hexoxiang-mu-zhi-yu-ban-ben-kong-zhi-xia">
           Continue reading
         </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/androidxiao-chu-tan-hao.html#androidxiao-chu-tan-hao">Android消除叹号</a></h2>
-    <p>
-      Posted on Fri 14 October 2016 in <a href="/category/misc.html">misc</a>
-
-
-    </p>
-  </header>
-  <div>
-      <p>更新
-Android 7 开始地址变了，使用以下命令：</p>
-<div class="highlight"><pre><span></span>adb shell <span class="s2">&quot;settings put global captive_portal_https_url https://www.noisyfox.cn/generate_204&quot;</span>
-</pre></div>
-
-
-<p>使用adb将/generate204地址设置一下就可以了，可以使用如下命令：</p>
-<div class="highlight"><pre><span></span>adb shell <span class="s2">&quot;settings put global captive_portal_server captive.v2ex.co&quot;</span>
-</pre></div>
   </div>
 </article>
 
