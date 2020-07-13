@@ -37,7 +37,7 @@
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content=""/>
 
-  <title>Hello, World! &ndash; Authors</title>
+  <title>Hello, World!</title>
 
 </head>
 <body class="light-theme">
@@ -88,16 +88,67 @@
   <main>
 
 
-<article class="single">
+
+
+<article>
   <header>
-    <h1 id="authors">Authors</h1>
+    <h2><a href="/vbox-ming-ling-xing.html#vbox-ming-ling-xing">vbox 命令行</a></h2>
+    <p>
+      Posted on Sun 03 November 2013 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
   </header>
   <div>
-    <ul class="list">
-      <li><a href="/author/eailfly.html">EaiLFly</a> (21)</li>
-    </ul>
+      <h2>创建虚拟机</h2>
+<div class="highlight"><pre><span></span>VBoxManage createvm –name <span class="s2">&quot;openSUSE&quot;</span> –register
+</pre></div>
+
+
+<p>创建一个名为openSUSE的虚拟机</p>
+<h2>查看虚拟机</h2>
+<div class="highlight"><pre><span></span>VBxoManage list vms
+</pre></div>
+
+
+<h2>查看虚拟机状态</h2>
+<div class="highlight"><pre><span></span>VBoxManage showvminfo suse
+</pre></div>
+
+
+<h2>修改虚拟机设置</h2>
+<h3>创建磁盘</h3>
+<div class="highlight"><pre><span></span>VBoxManage createhd --filename /home/virtualbox/suse.vdi --size <span class="m">8000</span> --remember
+</pre></div>
+
+
+<h3>修改操作系统类型</h3>
+<div class="highlight"><pre><span></span>VBoxManage modifyvm <span class="s2">&quot;suse&quot;</span> --ostype <span class="s2">&quot;suse&quot;</span>
+</pre></div>
+
+
+<h3>设置内存以及显存大小</h3>
+<div class="highlight"><pre><span></span>VBoxManage modifyvm <span class="s2">&quot;suse&quot;</span> --memory <span class="s2">&quot;1024&quot;</span> --vram <span class="s2">&quot;64&quot;</span>
+</pre></div>
+
+
+<h3>添加一个IDE接口 (SATA之类的也可以)</h3>
+<div class="highlight"><pre><span></span>VBoxManage storagectl winxp --name <span class="s2">&quot;IDE Controller&quot;</span> --add …</pre></div>
+        <br>
+        <a class="btn"
+           href="/vbox-ming-ling-xing.html#vbox-ming-ling-xing">
+          Continue reading
+        </a>
   </div>
 </article>
+
+  <div class="pagination">
+    <a class="btn float-right" href="/index2.html">
+      Newer Posts <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+
 
     <footer>
 <p>&copy;  </p>

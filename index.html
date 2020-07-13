@@ -92,6 +92,23 @@
 
 <article>
   <header>
+    <h2><a href="/ce-shi-github-actions-bu-shu-pelican.html#ce-shi-github-actions-bu-shu-pelican">测试 GitHub Actions 部署 Pelican</a></h2>
+    <p>
+      Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <p>这篇文章是为了测试<code>Github Actions</code>部署<code>Pelican</code>.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, World&quot;</span><span class="p">)</span>
+</pre></div>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/shu-mei-pai-zi-dong-zhong-lian-wifi.html#shu-mei-pai-zi-dong-zhong-lian-wifi">树莓派自动重连WiFi</a></h2>
     <p>
       Posted on Mon 13 July 2020 in <a href="/category/misc.html">misc</a>
@@ -354,40 +371,6 @@ Android 7 开始地址变了，使用以下命令：</p>
 
 <p>使用adb将/generate204地址设置一下就可以了，可以使用如下命令：</p>
 <div class="highlight"><pre><span></span>adb shell <span class="s2">&quot;settings put global captive_portal_server captive.v2ex.co&quot;</span>
-</pre></div>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/archshi-yong-apricityoszhu-ti.html#archshi-yong-apricityoszhu-ti">Arch使用ApricityOS主题</a></h2>
-    <p>
-      Posted on Mon 13 June 2016 in <a href="/category/misc.html">misc</a>
-
-
-    </p>
-  </header>
-  <div>
-      <h2>安装 ApricityOS 源</h2>
-<div class="highlight"><pre><span></span>wget http://apricityos.com/apricity-core-signed/apricity-icons-1.0.0-1-any.pkg.tar.xz
-yaourt -U apricity-icons-1.0.0-1-any.pkg.tar.xz
-</pre></div>
-
-
-<h2>编辑 <code>/etc/pacman.conf</code> 文件</h2>
-<div class="highlight"><pre><span></span><span class="k">[apricity-core]</span>
-<span class="na">SigLevel</span> <span class="o">=</span> <span class="s">Required</span>
-<span class="na">Server</span> <span class="o">=</span> <span class="s">http://apricityos.com/apricity-core-signed/</span>
-</pre></div>
-
-
-<p>更新源数据库</p>
-<div class="highlight"><pre><span></span>yaourt -Syu
-</pre></div>
-
-
-<h2>安装主题</h2>
-<div class="highlight"><pre><span></span>yaourt -S apricity-themes-gnome apricity-icons apricity-keyring apricity-wallpapers
 </pre></div>
   </div>
 </article>

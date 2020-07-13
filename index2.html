@@ -92,6 +92,40 @@
 
 <article>
   <header>
+    <h2><a href="/archshi-yong-apricityoszhu-ti.html#archshi-yong-apricityoszhu-ti">Arch使用ApricityOS主题</a></h2>
+    <p>
+      Posted on Mon 13 June 2016 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+  <div>
+      <h2>安装 ApricityOS 源</h2>
+<div class="highlight"><pre><span></span>wget http://apricityos.com/apricity-core-signed/apricity-icons-1.0.0-1-any.pkg.tar.xz
+yaourt -U apricity-icons-1.0.0-1-any.pkg.tar.xz
+</pre></div>
+
+
+<h2>编辑 <code>/etc/pacman.conf</code> 文件</h2>
+<div class="highlight"><pre><span></span><span class="k">[apricity-core]</span>
+<span class="na">SigLevel</span> <span class="o">=</span> <span class="s">Required</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">http://apricityos.com/apricity-core-signed/</span>
+</pre></div>
+
+
+<p>更新源数据库</p>
+<div class="highlight"><pre><span></span>yaourt -Syu
+</pre></div>
+
+
+<h2>安装主题</h2>
+<div class="highlight"><pre><span></span>yaourt -S apricity-themes-gnome apricity-icons apricity-keyring apricity-wallpapers
+</pre></div>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/yong-sphinx-zhi-zuo-zhong-wen-pdf.html#yong-sphinx-zhi-zuo-zhong-wen-pdf">用 Sphinx 制作中文 pdf</a></h2>
     <p>
       Posted on Mon 30 May 2016 in <a href="/category/misc.html">misc</a>
@@ -386,61 +420,12 @@ lrwxrwxrwx <span class="m">1</span> root root <span class="m">18</span> 3月   <
           Continue reading
         </a>
   </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/vbox-ming-ling-xing.html#vbox-ming-ling-xing">vbox 命令行</a></h2>
-    <p>
-      Posted on Sun 03 November 2013 in <a href="/category/misc.html">misc</a>
-
-
-    </p>
-  </header>
-  <div>
-      <h2>创建虚拟机</h2>
-<div class="highlight"><pre><span></span>VBoxManage createvm –name <span class="s2">&quot;openSUSE&quot;</span> –register
-</pre></div>
-
-
-<p>创建一个名为openSUSE的虚拟机</p>
-<h2>查看虚拟机</h2>
-<div class="highlight"><pre><span></span>VBxoManage list vms
-</pre></div>
-
-
-<h2>查看虚拟机状态</h2>
-<div class="highlight"><pre><span></span>VBoxManage showvminfo suse
-</pre></div>
-
-
-<h2>修改虚拟机设置</h2>
-<h3>创建磁盘</h3>
-<div class="highlight"><pre><span></span>VBoxManage createhd --filename /home/virtualbox/suse.vdi --size <span class="m">8000</span> --remember
-</pre></div>
-
-
-<h3>修改操作系统类型</h3>
-<div class="highlight"><pre><span></span>VBoxManage modifyvm <span class="s2">&quot;suse&quot;</span> --ostype <span class="s2">&quot;suse&quot;</span>
-</pre></div>
-
-
-<h3>设置内存以及显存大小</h3>
-<div class="highlight"><pre><span></span>VBoxManage modifyvm <span class="s2">&quot;suse&quot;</span> --memory <span class="s2">&quot;1024&quot;</span> --vram <span class="s2">&quot;64&quot;</span>
-</pre></div>
-
-
-<h3>添加一个IDE接口 (SATA之类的也可以)</h3>
-<div class="highlight"><pre><span></span>VBoxManage storagectl winxp --name <span class="s2">&quot;IDE Controller&quot;</span> --add …</pre></div>
-        <br>
-        <a class="btn"
-           href="/vbox-ming-ling-xing.html#vbox-ming-ling-xing">
-          Continue reading
-        </a>
-  </div>
 </article>
 
   <div class="pagination">
+    <a class="btn float-left" href="/index3.html">
+      <i class="fa fa-angle-left"></i> Older Posts
+    </a>
     <a class="btn float-right" href="/index.html">
       Newer Posts <i class="fa fa-angle-right"></i>
     </a>
