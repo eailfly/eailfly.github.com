@@ -1,7 +1,7 @@
 Title: 使用 Github Actions 部署 Pelican
 Date: 2020-07-13 17:06
 
-使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用`Github Actions` 自动发布页面的方法。
+使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用`Github Actions` 自动发布页面的方法。此方法引用自[这里](https://nolanbconaway.github.io/blog/2020/deploying-my-pelican-website-to-github-pages.html)
 
 ## 创建 Personal Token
 在[这里](https://github.com/settings/tokens)创建Personal Token.
