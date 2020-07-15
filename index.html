@@ -100,7 +100,7 @@
     </p>
   </header>
   <div>
-      <p>使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用<code>Github Actions</code> 自动发布页面的方法。</p>
+      <p>使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用<code>Github Actions</code> 自动发布页面的方法。此方法引用自<a href="https://nolanbconaway.github.io/blog/2020/deploying-my-pelican-website-to-github-pages.html">这里</a></p>
 <h2>创建 Personal Token</h2>
 <p>在<a href="https://github.com/settings/tokens">这里</a>创建Personal Token.</p>
 <p>然后在project的<code>Setting-Secrets</code>添加一个 Name 是<code>PERSONAL_TOKEN</code>，Value 是刚才生成的Token的 Secrets。</p>
@@ -118,7 +118,7 @@
     <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
 
     <span class="nt">steps</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2 …</span></pre></div>
+      <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions …</span></pre></div>
         <br>
         <a class="btn"
            href="/shi-yong-github-actions-bu-shu-pelican.html#shi-yong-github-actions-bu-shu-pelican">

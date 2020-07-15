@@ -29,13 +29,13 @@
 
 
 <meta name="author" content="EaiLFly" />
-<meta name="description" content="使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用Github Actions 自动发布页面的方法。 创建 Personal Token 在这里创建Personal Token. 然后在project的Setting-Secrets添加一个 Name 是PERSONAL_TOKEN，Value 是刚才生成的Token的 Secrets。 创建 Actions 在 sources 分支添加.github/workflows/publish.yaml name: Publish on: push: branches: - sources jobs: build-and-deploy: runs-on: ubuntu-latest steps: - uses: actions/checkout@v2 …" />
+<meta name="description" content="使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用Github Actions 自动发布页面的方法。此方法引用自这里 创建 Personal Token 在这里创建Personal Token. 然后在project的Setting-Secrets添加一个 Name 是PERSONAL_TOKEN，Value 是刚才生成的Token的 Secrets。 创建 Actions 在 sources 分支添加.github/workflows/publish.yaml name: Publish on: push: branches: - sources jobs: build-and-deploy: runs-on: ubuntu-latest steps: - uses: actions …" />
 <meta name="keywords" content="">
 
 
 <meta property="og:site_name" content="Hello, World!"/>
 <meta property="og:title" content="使用 Github Actions 部署 Pelican"/>
-<meta property="og:description" content="使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用Github Actions 自动发布页面的方法。 创建 Personal Token 在这里创建Personal Token. 然后在project的Setting-Secrets添加一个 Name 是PERSONAL_TOKEN，Value 是刚才生成的Token的 Secrets。 创建 Actions 在 sources 分支添加.github/workflows/publish.yaml name: Publish on: push: branches: - sources jobs: build-and-deploy: runs-on: ubuntu-latest steps: - uses: actions/checkout@v2 …"/>
+<meta property="og:description" content="使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用Github Actions 自动发布页面的方法。此方法引用自这里 创建 Personal Token 在这里创建Personal Token. 然后在project的Setting-Secrets添加一个 Name 是PERSONAL_TOKEN，Value 是刚才生成的Token的 Secrets。 创建 Actions 在 sources 分支添加.github/workflows/publish.yaml name: Publish on: push: branches: - sources jobs: build-and-deploy: runs-on: ubuntu-latest steps: - uses: actions …"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/shi-yong-github-actions-bu-shu-pelican.html"/>
 <meta property="og:type" content="article"/>
@@ -108,7 +108,7 @@
 
 
   <div>
-    <p>使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用<code>Github Actions</code> 自动发布页面的方法。</p>
+    <p>使用 Github 托管静态页面很方便，Pelican 也非常好用，但是每次发布都需要手动操作，从网上找到了使用<code>Github Actions</code> 自动发布页面的方法。此方法引用自<a href="https://nolanbconaway.github.io/blog/2020/deploying-my-pelican-website-to-github-pages.html">这里</a></p>
 <h2>创建 Personal Token</h2>
 <p>在<a href="https://github.com/settings/tokens">这里</a>创建Personal Token.</p>
 <p>然后在project的<code>Setting-Secrets</code>添加一个 Name 是<code>PERSONAL_TOKEN</code>，Value 是刚才生成的Token的 Secrets。</p>
